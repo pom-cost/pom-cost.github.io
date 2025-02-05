@@ -146,7 +146,7 @@
         }
 
         // Fetch the CSV file and add markers
-        fetch('individual_data.csv')
+        fetch('data/individual_data.csv')
             .then(response => response.text())
             .then(csvData => addMarkersFromCSV(csvData));
 

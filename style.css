@@ -1,5 +1,5 @@
 header {
-    background-image: url('top_image.jpeg');
+    background-image: url('assets/top_image.jpeg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -171,7 +171,7 @@ img {
 }
 
 footer {
-    background-image: url('bottom_image.jpeg');
+    background-image: url('assets/bottom_image.jpeg');
     overflow: hidden;
     margin-top: 5px; /* Add space above footer */
     background-size: cover;
