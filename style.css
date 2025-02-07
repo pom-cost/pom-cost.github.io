@@ -355,6 +355,8 @@ footer .logos {
     margin-bottom: 5px;
     color: #000;
     font-size: 12px;
+    text-align: center; /* Center align text */
+}
 }
     
     .dropdown-container {
