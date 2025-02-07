@@ -333,7 +333,10 @@ footer .logos {
 @media (max-width: 768px) {
     
     .color-bar-container {
-    top: 460px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center align items horizontally */
+    top: 530px;
     padding: 10px;
     border-radius: 5px;
     font-family: 'Montserrat', sans-serif;
@@ -357,15 +360,16 @@ footer .logos {
     font-size: 12px;
     text-align: center; /* Center align text */
 }
-}
+
     
     .dropdown-container {
-    top: 540px;
+    top: 610px;
     font-family: 'Montserrat', sans-serif;
     font-size: 12px;
     text-align: center;
-    right: 18px;
+    right: 65px;
     bottom: auto;
+        
 }
 
     
@@ -382,7 +386,7 @@ footer .logos {
 }
 
     header .left-nav {
-        position: absolute; /* Position the menu absolutely inside the header */
+        position: absolute; 
         top: 70px; /* Adjust as needed */
         left: 10px; /* Position to the left */
         transform: translate(0, -50%);
@@ -423,14 +427,14 @@ footer .logos {
     }
     
     .logos {
-        display: flex;
+        display: absolute;
         justify-content: flex-end;
         align-items: center;
         gap: 50px;
         padding: 10px 0;
         position: absolute;
         bottom: 1px; /* Position logos at the bottom of the footer */
-        right: 70px; 
+        right: 20%; 
         z-index: 2; /* Ensure logos appear on top of the background image */
 }
 
@@ -501,7 +505,6 @@ footer .logos {
     text-transform: none; /* Make text appear in capital letters */
     font-weight: bold; /* Make text bold */
 }
-    
 }
 
 /* Keep the menu always visible on larger screens */
