@@ -46,8 +46,8 @@ header img {
 
 .subtitle {
     position: absolute; /* Absolutely position the text */
-    top: 115px; /* Adjust to be below the title */
-    left: 50%; /* Center horizontally */
+    top: 110px; /* Adjust to be below the title */
+    left: 160px; /* Center horizontally */
     transform: translate(-50%, -50%); /* Adjust position to truly center */
     color: white; /* Text color */
     font-size: 18px; /* Match font size as needed */
@@ -55,7 +55,8 @@ header img {
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8); /* Add a shadow for better visibility */
     text-align: center; /* Center text */
     text-transform: none; /* Make text appear in capital letters */
-    font-weight: bold; /* Make text bold */
+    font-weight:; /* Make text bold */
+    font-style: italic;
 }
 
 .subtitle a {
@@ -68,9 +69,9 @@ header img {
 }
 
 .header-text {
-    position: absolute; /* Absolutely position the text */
+    position: fixed; /* Absolutely position the text */
     top: 60px; /* Center vertically */
-    left: 50%; /* Center horizontally */
+    left: 250px; /* Center horizontally */
     transform: translate(-50%, -50%); /* Adjust position to truly center */
     color: white; /* Text color */
     font-size: 40px; /* Adjust font size as needed */
@@ -130,9 +131,9 @@ header img {
 
 .map-menu {
     position: absolute;
-    top: 185px;
-    left: 60px;
-    background: rgba(255, 255, 255, 0.5);
+    top: 50px;
+    right: 200px;
+    background: rgba(255, 255, 255, 0);
     padding: 10px;
     border-radius: 5px;
     font-family: 'Montserrat', sans-serif;
@@ -147,14 +148,14 @@ header img {
 }
 
 .map-menu ul li {
-    margin: 0px 0;
+    margin: 0px 10px;
 }
 
 .map-menu ul li a {
-    color: #000;
+    color: white;
     text-decoration: none;
     font-weight: normal;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .map-menu ul li a:hover {
@@ -328,6 +329,65 @@ footer .logos {
     object-position: top;
 }
 
+/* Add this to your style.css file */
+@keyframes grow {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.overlay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.5);
+    width: 100%;
+    max-width: 900px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    z-index: 1000;
+    visibility: hidden;
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+    min-height: 500px; /* Base height */
+    height: auto; /* Allow dynamic height */
+    max-height: 90vh; /* Prevent excessive height */
+    overflow-y: auto; /* Enable scrolling if content is large */
+}
+
+.overlay .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #f4;
+    color: black;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.overlay-content {
+    width: 100%;
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+    min-height: 500px; /* Ensures a base height */
+    height: 80vh; /* Adapts dynamically */
+    border: none;
+}
+.overlay.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
 
 /* Hide the menu by default on small screens */
 @media (max-width: 768px) {
@@ -336,7 +396,7 @@ footer .logos {
     display: flex;
     flex-direction: column;
     align-items: center; /* Center align items horizontally */
-    top: 460px;
+    top: 530px;
     padding: 10px;
     border-radius: 5px;
     font-family: 'Montserrat', sans-serif;
@@ -363,12 +423,13 @@ footer .logos {
 
     
     .dropdown-container {
-    top: 540px;
+    top: 610px;
     font-family: 'Montserrat', sans-serif;
     font-size: 12px;
     text-align: center;
-    right: 18px;
+    right: 65px;
     bottom: auto;
+        
 }
 
     
@@ -426,14 +487,14 @@ footer .logos {
     }
     
     .logos {
-        display: flex;
+        display: absolute;
         justify-content: flex-end;
         align-items: center;
         gap: 50px;
         padding: 10px 0;
         position: absolute;
         bottom: 1px; /* Position logos at the bottom of the footer */
-        right: 70px; 
+        right: 20%; 
         z-index: 2; /* Ensure logos appear on top of the background image */
 }
 
