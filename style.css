@@ -388,7 +388,7 @@ footer .logos {
 }
 
 .overlay-content iframe {
-    width: -moz-available;
+    width: 100%;
     min-height: 300px; /* Ensure it has a minimum height */
     max-height: 85vh;
     min-width: 30; /* Ensure it has a minimum height */
@@ -425,7 +425,7 @@ footer .logos {
             }
     
     .map-menu.active {
-                display: none;
+                display: block;
             }
     
 .map-menu {
@@ -436,6 +436,7 @@ footer .logos {
     border-radius: 5px;
     font-family: 'Montserrat', sans-serif;
     z-index: 1000;
+    display: none;
      
 }
     
@@ -467,11 +468,11 @@ footer .logos {
     display: flex;
     flex-direction: column;
     align-items: center; /* Center align items horizontally */
-    top: 530px;
+    top: 120px;
     padding: 10px;
     border-radius: 5px;
     font-family: 'Montserrat', sans-serif;
-    right: 10px;
+    right: 200px;
 }
     
     .color-bar {
@@ -494,11 +495,11 @@ footer .logos {
 
     
     .dropdown-container {
-    top: 610px;
+    top: 200px;
     font-family: 'Montserrat', sans-serif;
     font-size: 12px;
     text-align: center;
-    right: 65px;
+    right: 260px;
     bottom: auto;
         
 }

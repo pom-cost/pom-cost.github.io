@@ -130,14 +130,16 @@ header img {
 }
 
 .map-menu {
+    display: block;
     position: absolute;
     top: 50px;
-    right: 200px;
+    right: 50px;
     background: rgba(255, 255, 255, 0);
     padding: 10px;
     border-radius: 5px;
     font-family: 'Montserrat', sans-serif;
     z-index: 1000;
+     
 }
 
 
@@ -346,20 +348,21 @@ footer .logos {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0.5);
-    width: 100%;
-    max-width: 900px;
+    width:80vw;
     background: white;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     padding: 20px;
     z-index: 1000;
     visibility: hidden;
+    opacity: 0;
     transition: opacity 0.3s ease-out, transform 0.3s ease-out;
-    min-height: 500px; /* Base height */
-    height: auto; /* Allow dynamic height */
-    max-height: 90vh; /* Prevent excessive height */
-    overflow-y: auto; /* Enable scrolling if content is large */
+    min-height: auto; /* Allow height to be dynamic */
+    max-height: 90vh; /* Prevent the overlay from growing too much */
+    height: auto; /* Let the content define height */
+    overflow: auto; /* Ensure scrolling if content overflows */
 }
+
 
 .overlay .close-btn {
     position: absolute;
@@ -377,30 +380,99 @@ footer .logos {
 
 .overlay-content {
     width: 100%;
+    max-height: 90vh; /* Allow more space */
+    overflow-y: auto;
     font-family: 'Montserrat', sans-serif;
     text-align: center;
-    min-height: 500px; /* Ensures a base height */
-    height: 80vh; /* Adapts dynamically */
+
+}
+
+.overlay-content iframe {
+    width: -moz-available;
+    min-height: 300px; /* Ensure it has a minimum height */
+    max-height: 85vh;
+    min-width: 30; /* Ensure it has a minimum height */
+    max-width: 85vw;
     border: none;
 }
 .overlay.active {
     opacity: 1;
+    height: auto;
     visibility: visible;
     transform: translate(-50%, -50%) scale(1);
 }
+ .menu-toggle {
+            position: absolute;
+            display: none;
+            cursor: pointer;
+            right: 40px;
+            font-size: 40px;
+            background:;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Montserrat', sans-serif;
+            top: 10px;
+            right: 40px;
+            width: 10%;
+     }
 
 /* Hide the menu by default on small screens */
 @media (max-width: 768px) {
+    
+  .menu-toggle {
+     display: block;
+            }
+    
+    .map-menu.active {
+                display: block;
+            }
+    
+.map-menu {
+    position: absolute;
+    top: 80px;
+    right: 200px;
+    padding: 10px;
+    border-radius: 5px;
+    font-family: 'Montserrat', sans-serif;
+    z-index: 1000;
+    display: none;
+     
+}
+    
+    
+.map-menu ul {
+    margin: 0;
+    background: rgba(0, 0, 0, 0.5);
+    flex-direction: column;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+    position: absolute;
+    top: 50px;
+    width: 180px;
+    height: 90px;
+}
+
+.map-menu ul li {
+    margin: 0px 10px;
+}
+
+.map-menu ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: normal;
+    font-size: 11px;
+}
     
     .color-bar-container {
     display: flex;
     flex-direction: column;
     align-items: center; /* Center align items horizontally */
-    top: 530px;
+    top: 120px;
     padding: 10px;
     border-radius: 5px;
     font-family: 'Montserrat', sans-serif;
-    right: 10px;
+    right: 200px;
 }
     
     .color-bar {
@@ -423,11 +495,11 @@ footer .logos {
 
     
     .dropdown-container {
-    top: 610px;
+    top: 200px;
     font-family: 'Montserrat', sans-serif;
     font-size: 12px;
     text-align: center;
-    right: 65px;
+    right: 260px;
     bottom: auto;
         
 }
@@ -458,22 +530,6 @@ footer .logos {
         font-size: 12px;
 }
 
-
-    .nav-menu.show {
-        display: flex; /* Show the menu when the 'show' class is toggled */
-    }
-    
-    nav ul li a {
-    color: white; /* Menu text color */
-    text-decoration: none; /* Removes underline */
-    font-size: 10px;
-    font-family: 'Montserrat', sans-serif; /* Change font type */
-    font-weight: bold;
-}
-
-    nav ul li {
-        margin: 10px 0;
-    }
     
     header{
         height:100px
@@ -482,7 +538,8 @@ footer .logos {
     .header-text {
         font-size: 20px; /* Smaller title on mobile */
         top: 40px; /* Center vertically */
-        left: 50%; /* Center horizontally */
+        left: 155px;
+
         transform: translate(-50%, -50%); /* Adjust position to truly center */
     }
     
@@ -494,12 +551,12 @@ footer .logos {
         padding: 10px 0;
         position: absolute;
         bottom: 1px; /* Position logos at the bottom of the footer */
-        right: 20%; 
+        right: 7%; 
         z-index: 2; /* Ensure logos appear on top of the background image */
 }
 
      .logo {
-        max-height: 20px; /* Smaller logos on mobile */
+        max-height: 30px; /* Smaller logos on mobile */
         height: auto;
     }
 
@@ -541,21 +598,12 @@ footer .logos {
         padding: 10px 0; /* Adds padding around the menu */
         background-color: rgba(0, 0, 0, 0); /* Optional: Add a semi-transparent background */
 }
-    .map-menu {
-    position: absolute;
-    top: 135px;
-    left: 60px;
-    background: rgba(255, 255, 255, 0.5);
-    padding: 10px;
-    border-radius: 5px;
-    font-family: 'Montserrat', sans-serif;
-    z-index: 1000;
-}
+
     
     .subtitle {
     position: absolute; /* Absolutely position the text */
-    top: 75px; /* Adjust to be below the title */
-    left: 50%; /* Center horizontally */
+    top: 70px; /* Adjust to be below the title */
+    left: 120px;
     transform: translate(-50%, -50%); /* Adjust position to truly center */
     color: white; /* Text color */
     font-size: 11px; /* Match font size as needed */
@@ -563,7 +611,7 @@ footer .logos {
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8); /* Add a shadow for better visibility */
     text-align: center; /* Center text */
     text-transform: none; /* Make text appear in capital letters */
-    font-weight: bold; /* Make text bold */
+    font-weight: normal; /* Make text bold */
 }
 }
 
