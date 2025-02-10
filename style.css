@@ -471,15 +471,21 @@ footer .logos {
 /* Hide the menu by default on small screens */
 @media (max-width: 768px) {
     
+    .overlay{max-height: 70vh; /* Prevent the overlay from growing too much */
+             width: 100%;   
+    }
+    
     .iframe-container {
-       padding-bottom: 50%; /* Adjust aspect ratio */
+       padding-bottom: 100%; /* Adjust aspect ratio */
        padding-top: 0%; /* Adjust aspect ratio */
+       width: 100% 
     }
 
     .iframe-container iframe {
-        transform: scale(0.35);
-        width: 100%; 
-        min-width: 260vw;
+        transform: scale(0.3);
+        width: 100%;
+        top: 50px;
+        min-width: 350vw;
 
     }
 
@@ -533,7 +539,7 @@ footer .logos {
     display: flex;
     flex-direction: column;
     align-items: center; /* Center align items horizontally */
-    top: 520px;
+    top: 300px;
     padding: 10px;
     border-radius: 5px;
     font-family: 'Montserrat', sans-serif;
@@ -560,11 +566,11 @@ footer .logos {
 
     
     .dropdown-container {
-    top: 600px;
+    top: 380px;
     font-family: 'Montserrat', sans-serif;
     font-size: 12px;
     text-align: center;
-    right: 57px;
+    right: 55px;
     bottom: auto;
         
 }
@@ -601,9 +607,9 @@ footer .logos {
     }
 
     .header-text {
-        font-size: 20px; /* Smaller title on mobile */
+        font-size: 18px; /* Smaller title on mobile */
         top: 40px; /* Center vertically */
-        left: 155px;
+        left: 130px;
 
         transform: translate(-50%, -50%); /* Adjust position to truly center */
     }
@@ -616,12 +622,12 @@ footer .logos {
         padding: 10px 0;
         position: absolute;
         bottom: 1px; /* Position logos at the bottom of the footer */
-        right: 7%; 
+        right: 2%; 
         z-index: 2; /* Ensure logos appear on top of the background image */
 }
 
      .logo {
-        max-height: 30px; /* Smaller logos on mobile */
+        max-height: 24px; /* Smaller logos on mobile */
         height: auto;
     }
 
@@ -668,7 +674,7 @@ footer .logos {
     .subtitle {
     position: absolute; /* Absolutely position the text */
     top: 70px; /* Adjust to be below the title */
-    left: 120px;
+    left: 105px;
     transform: translate(-50%, -50%); /* Adjust position to truly center */
     color: white; /* Text color */
     font-size: 11px; /* Match font size as needed */
