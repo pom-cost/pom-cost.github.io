@@ -232,7 +232,7 @@ def plot_climatological_year(file_path):
         alpha=0.5,
         title='Climatological Year Temperature Range',
         xlabel='Month',
-        ylabel='Temperature',
+        ylabel=r"Temperature [°C]",
         width=800,
         height=400
         )
@@ -296,7 +296,7 @@ def plot_obs(df):
       clim=(-3, 3),
       size=8,
       xlabel='Month',
-      ylabel='Temperature',
+      ylabel=r"Temperature [°C]",
       legend_position='top_left'
       )
     return scatter_plot

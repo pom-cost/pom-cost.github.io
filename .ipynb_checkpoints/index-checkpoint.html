@@ -55,11 +55,15 @@ window.addEventListener("resize", function () {
         </ul>
     </nav>
    
-    <div class="overlay" id="climatologicalOverlay">
+    <div class="overlay climatological-overlay" id="climatologicalOverlay">
         <button class="close-btn" onclick="closeOverlay('climatologicalOverlay')">&times;</button>
         <div class="overlay-content">
-            <iframe src="climatological-year/climatological_plot.html"></iframe>
+            <div class="iframe-container">
+                <iframe src="climatological-year/climatological_plot.html"></iframe>
+            </div>
         </div>
+            
+       
     </div>
 
     <div class="overlay" id="entidadesOverlay">
