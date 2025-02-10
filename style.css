@@ -358,8 +358,7 @@ footer .logos {
     opacity: 0;
     transition: opacity 0.3s ease-out, transform 0.3s ease-out;
     min-height: auto; /* Allow height to be dynamic */
-    max-height: 90vh; /* Prevent the overlay from growing too much */
-    height: auto; /* Let the content define height */
+    max-height: 200vh; /* Prevent the overlay from growing too much */
     overflow: auto; /* Ensure scrolling if content overflows */
     overflow-y: scroll;
 }
@@ -381,7 +380,7 @@ footer .logos {
 
 .overlay-content {
     width: 100%;
-    max-height: 100vh; /* Allow more space */
+    max-height: 200vh; /* Allow more space */
     overflow-y: auto;
     font-family: 'Montserrat', sans-serif;
     text-align: center;
@@ -390,7 +389,7 @@ footer .logos {
 
 .overlay-content iframe {
     width: 100%;
-    min-height: 300px; /* Ensure it has a minimum height */
+    min-height: 600px; /* Ensure it has a minimum height */
     max-height: 85vh;
     min-width: 30; /* Ensure it has a minimum height */
     max-width: 85vw;
