@@ -10,34 +10,89 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 </head>
+
+<script>
+function resizeIframe(iframe) {
+    if (iframe.contentWindow.document.body) {
+        iframe.style.height = iframe.contentWindow.document.body.scrollHeight + "px";
+    }
+}
+
+// Resize iframe when it loads
+document.addEventListener("DOMContentLoaded", function () {
+    const iframe = document.querySelector(".overlay-content iframe");
+    if (iframe) {
+        iframe.addEventListener("load", function () {
+            resizeIframe(iframe);
+        });
+    }
+});
+
+// Resize iframe on window resize
+window.addEventListener("resize", function () {
+    const iframe = document.querySelector(".overlay-content iframe");
+    if (iframe) {
+        resizeIframe(iframe);
+    }
+});
+</script>
+
 <body>
     <header>
         <div class="header-text">Poniendo Ojos al Mar</div>
         <div class="subtitle"><a href="https://www.youtube.com/watch?v=A2zKARkpDW4" target="_blank">Tomando el pulso del Océano</a></div> <!-- Added link here -->
-        <div class="menu-toggle"></div>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
     </header>
     
     <div id="map"></div>
 
     <nav class="map-menu">
         <ul>
-            <li><a href="climatological-year/">Perspectiva climatológica</a></li>
+            <li><a href="#" onclick="toggleOverlay('proyectoOverlay')">¿Qué sabemos?</a></li>
+            <li><a href="#" onclick="toggleOverlay('climatologicalOverlay')">Perspectiva climatológica</a></li>
+            <li><a href="#" onclick="toggleOverlay('downloadOverlay')">Datos</a></li>
+            <li><a href="#" onclick="toggleOverlay('entidadesOverlay')">Entidades participantes</a></li>
         </ul>
     </nav>
    
+    <div class="overlay climatological-overlay" id="climatologicalOverlay">
+        <button class="close-btn" onclick="closeOverlay('climatologicalOverlay')">&times;</button>
+        <div class="overlay-content">
+            <div class="iframe-container">
+                <iframe src="climatological-year/climatological_plot.html"></iframe>
+            </div>
+        </div>
+            
+       
+    </div>
+
+    <div class="overlay" id="entidadesOverlay">
+        <button class="close-btn" onclick="closeOverlay('entidadesOverlay')">&times;</button>
+        <div class="overlay-content">
+            <iframe src="entidades/index.html"></iframe>
+        </div>
+    </div>
+    
+    <div class="overlay" id="downloadOverlay">
+        <button class="close-btn" onclick="closeOverlay('downloadOverlay')">&times;</button>
+        <div class="overlay-content">
+            <iframe src="data/datos.html"></iframe>
+        </div>
+    </div>
+
+    <div class="overlay" id="proyectoOverlay">
+        <button class="close-btn" onclick="closeOverlay('proyectoOverlay')">&times;</button>
+        <div class="overlay-content">
+            <iframe src="info/info.html"></iframe>
+        </div>
+    </div>
+   
     <!-- Footer section -->
     <footer>
-
         <div class="logos">
             <img src="assets/logoNexGen.png" alt="Logo NextGen" class="logo">
             <img src="assets/logoIEO-CSIC.png" alt="Logo IEO-CSIC" class="logo">
         </div>
-        <nav class="nav-menu">
-            <ul>
-                <li><a href="entidades/">Entidades participantes</a></li>
-                <!-- Add more links here if needed -->
-            </ul>
-        </nav>
     </footer>
 
     <script>
@@ -90,16 +145,16 @@
                                 endColor = red;
                             }
 
-    ratio = Math.max(0, Math.min(1, ratio)); // Clamp between 0 and 1
+                            ratio = Math.max(0, Math.min(1, ratio)); // Clamp between 0 and 1
 
-    var r = Math.round(startColor[0] + ratio * (endColor[0] - startColor[0]));
-    var g = Math.round(startColor[1] + ratio * (endColor[1] - startColor[1]));
-    var b = Math.round(startColor[2] + ratio * (endColor[2] - startColor[2]));
+                            var r = Math.round(startColor[0] + ratio * (endColor[0] - startColor[0]));
+                            var g = Math.round(startColor[1] + ratio * (endColor[1] - startColor[1]));
+                            var b = Math.round(startColor[2] + ratio * (endColor[2] - startColor[2]));
 
-    return `rgb(${r},${g},${b})`;
-}
+                            return `rgb(${r},${g},${b})`;
+                        }
 
-                var fillColor = getColor(temp_anom);
+                        var fillColor = getColor(temp_anom);
 
                         var popupContent = '<div style="width: 200px; font-family: Montserrat, sans-serif; margin-left: 20px;">' +
                                    '<strong>Sea Temperature:</strong> ' + temp + '°C<br>' +
@@ -188,6 +243,45 @@
 
         dropdownControl.addTo(map);
 
+        function adjustOverlaySize(id) {
+            var iframe = document.querySelector(`#${id} iframe`);
+            iframe.onload = function() {
+                setTimeout(() => {
+                    iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px';
+                }, 500);
+            };
+        }
+
+        function toggleOverlay(id) {
+            document.querySelectorAll('.overlay.active').forEach(function(overlay) {
+                overlay.classList.remove('active');
+            });
+
+            var overlay = document.getElementById(id);
+            if (!overlay.classList.contains("active")) {
+                overlay.classList.add("active");
+                adjustOverlaySize(id);
+            }
+        }
+
+        function closeOverlay(id) {
+            var overlay = document.getElementById(id);
+            if (overlay && overlay.classList.contains("active")) {
+                overlay.classList.remove("active");
+            }
+        }
+
+        function toggleMenu() {
+            var menu = document.querySelector(".map-menu");
+            menu.classList.toggle("active");
+        }
+
+        document.querySelectorAll('.close-btn').forEach(function(button) {
+            button.addEventListener('click', function() {
+                var overlayId = button.getAttribute('data-overlay');
+                closeOverlay(overlayId);
+            });
+        });
 
         // Existing markers and popups
 
