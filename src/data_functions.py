@@ -5,7 +5,7 @@ from scipy.signal import savgol_filter
 from bokeh.models import HoverTool
 hv.extension('bokeh')
 
-def detect_water_temp(temp,time,window_size=6, only_water_val=True):
+def detect_water_temp(temp, time, window_size=6, only_water_val=True):
 
     # Classify based on moving variance
     moving_avg = pd.Series(temp).rolling(window=window_size, min_periods=1).mean().to_numpy()
@@ -80,7 +80,7 @@ def detect_water_temp_v2(temp, time, window_size=4, only_water_val=True):
     moving_var = pd.Series(temp).rolling(window=window_size, min_periods=1).var().to_numpy()
 
     # Define a threshold for detecting similar values, using a small variance threshold
-    var_threshold = np.nanmean(moving_var) * 0.1
+    var_threshold = np.nanmean(moving_var) * 0.2
 
     # Identify periods with low variance
     similar_periods = moving_var < var_threshold
@@ -126,7 +126,7 @@ def datetime_to_decimal_year(date):
 
 
 
-def get_data_from_temp_sensors(filepath, team_name='raw', lat= None, lon= None, ):
+def get_data_from_temp_sensors(filepath, team_name='raw', lat= None, lon= None ):
 
     data=extract_lat_lon_temp_time(filepath)
     time=data.time.values
