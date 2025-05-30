@@ -233,8 +233,7 @@ def plot_climatological_year(file_path):
         title='Climatological Year Temperature Range',
         xlabel='Month',
         ylabel=r"Temperature [°C]",
-        width=800,
-        height=400
+        responsive=True,
         )
 
     # Add the smoothed median line (in weekly scale)
@@ -243,7 +242,8 @@ def plot_climatological_year(file_path):
         label='Median'
     ).opts(
         color='blue',
-        line_width=2
+        line_width=2,
+        responsive=True,
         )
 
     month_boundaries = [

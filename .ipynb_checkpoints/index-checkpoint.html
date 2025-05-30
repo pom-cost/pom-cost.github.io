@@ -40,7 +40,7 @@ window.addEventListener("resize", function () {
 <body>
     <header>
         <div class="header-text">Poniendo Ojos al Mar</div>
-        <div class="subtitle"><a href="https://www.youtube.com/watch?v=A2zKARkpDW4" target="_blank">Tomando el pulso del Océano</a></div> <!-- Added link here -->
+        <div class="subtitle"><a href="https://www.youtube.com/watch?v=Ng2vTXxnD20" target="_blank">Tomando el pulso del Océano</a></div> <!-- Added link here -->
         <div class="menu-toggle" onclick="toggleMenu()">☰</div>
     </header>
     
@@ -50,8 +50,9 @@ window.addEventListener("resize", function () {
         <ul>
             <li><a href="#" onclick="toggleOverlay('proyectoOverlay')">¿Qué sabemos?</a></li>
             <li><a href="#" onclick="toggleOverlay('climatologicalOverlay')">Perspectiva climatológica</a></li>
-            <li><a href="#" onclick="toggleOverlay('downloadOverlay')">Datos</a></li>
+            <li><a href="https://github.com/pom-cost/pom-cost.github.io/tree/main/data" target="_blank">Datos</a></li> <!-- Direct link -->
             <li><a href="#" onclick="toggleOverlay('entidadesOverlay')">Entidades participantes</a></li>
+            <li><a href="#" onclick="toggleOverlay('8junioOverlay')">Dia de los Océanos</a></li>
         </ul>
     </nav>
    
@@ -59,7 +60,7 @@ window.addEventListener("resize", function () {
         <button class="close-btn" onclick="closeOverlay('climatologicalOverlay')">&times;</button>
         <div class="overlay-content">
             <div class="iframe-container">
-                <iframe src="climatological-year/climatological_plot.html"></iframe>
+                <iframe src="climatological-year/climatological_plot.html" scrolling="no"></iframe>
             </div>
         </div>
             
@@ -84,6 +85,13 @@ window.addEventListener("resize", function () {
         <button class="close-btn" onclick="closeOverlay('proyectoOverlay')">&times;</button>
         <div class="overlay-content">
             <iframe src="info/info.html"></iframe>
+        </div>
+    </div>
+
+    <div class="overlay" id="8junioOverlay">
+        <button class="close-btn" onclick="closeOverlay('8junioOverlay')">&times;</button>
+        <div class="overlay-content">
+            <iframe src="8junio/8junio.html"></iframe>
         </div>
     </div>
    
@@ -210,7 +218,7 @@ window.addEventListener("resize", function () {
 
         colorBarControl.onAdd = function(map) {
             var div = L.DomUtil.create('div', 'color-bar-container');
-            div.innerHTML = '<div class="color-bar-title">Temperature Anomaly (1970-1978)</div>' +
+            div.innerHTML = '<div class="color-bar-title">Relative Temperature to Sardinero (70s) </div>' +
                             '<div class="color-bar">-3°C to 3°C</div>';
             return div;
         };
@@ -244,12 +252,24 @@ window.addEventListener("resize", function () {
         dropdownControl.addTo(map);
 
         function adjustOverlaySize(id) {
-            var iframe = document.querySelector(`#${id} iframe`);
-            iframe.onload = function() {
-                setTimeout(() => {
-                    iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px';
-                }, 500);
+            const iframe = document.querySelector(`#${id} iframe`);
+            if (!iframe) return;
+        
+            const resize = () => {
+                try {
+                    const doc = iframe.contentDocument || iframe.contentWindow.document;
+                    iframe.style.height = doc.body.scrollHeight + "px";
+                } catch (e) {
+                    iframe.style.height = "600px"; // fallback height if cross-origin
+                }
             };
+        
+            iframe.addEventListener("load", () => {
+                setTimeout(resize, 300); // wait for internal content to load
+            });
+        
+            // Also trigger it once immediately (in case it's already loaded)
+            setTimeout(resize, 500);
         }
 
         function toggleOverlay(id) {
@@ -257,7 +277,7 @@ window.addEventListener("resize", function () {
                 overlay.classList.remove('active');
             });
 
-            var overlay = document.getElementById(id);
+            const overlay = document.getElementById(id);
             if (!overlay.classList.contains("active")) {
                 overlay.classList.add("active");
                 adjustOverlaySize(id);
@@ -295,7 +315,6 @@ window.addEventListener("resize", function () {
         var lat_magda    = 43.4704, lon_magda    = -3.7653;
         var lat_IEO      = 43.4634,   lon_IEO    = -3.7827;
         var lat_Miguel   = 43.4508, lon_Miguel   = -3.8215;
-        var lat_Laredo   = 43.4142, lon_Laredo   = -3.4192;
 
         // Create markers and popups with adjusted iframe dimensions
         var popupContentSardi = '<div style="width: 400px; height: 200px; overflow: hidden;">' +
@@ -309,12 +328,9 @@ window.addEventListener("resize", function () {
                             '</div>';
 
         var popupContentMiguel = '<div style="width: 420px; height: 250px; overflow: hidden;">' +
-                            '<iframe src="Miguel_Bravo_plot.html" style="border:none; width: 100%; height: 100%;"></iframe>' +
+                            '<iframe src="miguel_plot.html" style="border:none; width: 100%; height: 100%;"></iframe>' +
                             '</div>';
 
-        var popupContentLaredo = '<div style="width: 420px; height: 250px; overflow: hidden;">' +
-                            '<iframe src="Laredo_plot.html" style="border:none; width: 100%; height: 100%;"></iframe>' +
-                            '</div>';
     
         L.marker([lat_sardi, lon_sardi], {icon: watericonblue})
             .addTo(map)
@@ -332,9 +348,7 @@ window.addEventListener("resize", function () {
             .addTo(map)
             .bindPopup(popupContentIEO);
         
-        L.marker([lat_Laredo, lon_Laredo], {icon: watericonblue})
-            .addTo(map)
-            .bindPopup(popupContentLaredo);// Attach the popup
+// Attach the popup
     </script>
 </body>
 </html>

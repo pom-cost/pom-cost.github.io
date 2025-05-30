@@ -55,7 +55,7 @@ header img {
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8); /* Add a shadow for better visibility */
     text-align: center; /* Center text */
     text-transform: none; /* Make text appear in capital letters */
-    font-weight:; /* Make text bold */
+    font-weight: normal; /* Make text bold */
     font-style: italic;
 }
 
@@ -363,23 +363,24 @@ footer .logos {
     overflow-y: scroll;
 }
 
-.climatological-overlay{
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0.5);
-    width: 100%;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
-    min-height: auto; /* Allow height to be dynamic */
-    max-height: 200vh; /* Prevent the overlay from growing too much */
-    overflow: auto; /* Ensure scrolling if content overflows */
-    overflow-y: scroll;}
+.climatological-overlay {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.5);
+  width: 80vw;
+  max-width: 100%;
+  height: auto;
+  max-height: 90vh;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+  overflow: auto;
+}
 
 
 .overlay .close-btn {
@@ -418,9 +419,10 @@ footer .logos {
     width: 100%;
     min-height: 600px; /* Ensure it has a minimum height */
     max-height: 85vh;
-    min-width: 30; /* Ensure it has a minimum height */
+    min-width: 30px; /* Ensure it has a minimum height */
     max-width: 85vw;
     border: none;
+    display: block;
 }
 .overlay.active {
     width: 70%;
@@ -431,26 +433,23 @@ footer .logos {
 }
 
 
+
 .iframe-container {
-    position: relative;
     width: 100%;
-    padding-bottom: 45.25%; /* 16:9 aspect ratio */
-    min-width: 50vw;
-    height: 0;
+    height: auto;
+    max-height: 85vh;
     overflow: hidden;
-    overflow-x: hidden;
+    padding: 0;
+    margin: 0;
 }
 
-.iframe-container iframe {
-    position: relative;
-    top: 10px;
-    right: 50px;
-    width: 100%;
-    height: 100%;
-    border: none;
-    transform: scale(1); /* Scale down the content */
-    transform-origin: 0 0; /* Ensure scaling starts from the top-left corner */
-    overflow-y: auto;
+.iframe-container {
+  width: 100%;
+  height: auto;
+  max-height: 85vh;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
 }
  .menu-toggle {
             position: absolute;
@@ -468,6 +467,17 @@ footer .logos {
             width: 10%;
      }
 
+#climatologicalOverlay iframe {
+  width: 100%;
+  min-height: 400px;
+  height: auto;
+  max-width: 100%;
+  border: none;
+  display: block;
+}
+
+
+
 /* Hide the menu by default on small screens */
 @media (max-width: 768px) {
     
@@ -476,19 +486,22 @@ footer .logos {
     }
     
     .iframe-container {
-       padding-bottom: 100%; /* Adjust aspect ratio */
-       padding-top: 0%; /* Adjust aspect ratio */
-       width: 100% 
-    }
-
-    .iframe-container iframe {
-        transform: scale(0.3);
         width: 100%;
-        top: 50px;
-        min-width: 350vw;
-
+        padding: 0;
+        margin: 0;
+        height: auto;
+        max-height: 85vh;
+        overflow: hidden;
     }
-
+    
+    .iframe-container iframe {
+        width: 100%;
+        height: auto;
+        transform: none;
+        min-width: unset;
+        top: 0;
+    }
+    
 
     
   .menu-toggle {

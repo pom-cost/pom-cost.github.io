@@ -55,7 +55,7 @@ header img {
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8); /* Add a shadow for better visibility */
     text-align: center; /* Center text */
     text-transform: none; /* Make text appear in capital letters */
-    font-weight:; /* Make text bold */
+    font-weight: normal; /* Make text bold */
     font-style: italic;
 }
 
@@ -348,7 +348,7 @@ footer .logos {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0.5);
-    width:80vw;
+    width: 80vw;
     background: white;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
@@ -358,9 +358,28 @@ footer .logos {
     opacity: 0;
     transition: opacity 0.3s ease-out, transform 0.3s ease-out;
     min-height: auto; /* Allow height to be dynamic */
-    max-height: 90vh; /* Prevent the overlay from growing too much */
-    height: auto; /* Let the content define height */
+    max-height: 200vh; /* Prevent the overlay from growing too much */
     overflow: auto; /* Ensure scrolling if content overflows */
+    overflow-y: scroll;
+}
+
+.climatological-overlay {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.5);
+  width: 80vw;
+  max-width: 100%;
+  height: auto;
+  max-height: 90vh;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+  overflow: auto;
 }
 
 
@@ -380,22 +399,33 @@ footer .logos {
 
 .overlay-content {
     width: 100%;
-    max-height: 90vh; /* Allow more space */
+    max-height: 200vh; /* Allow more space */
     overflow-y: auto;
     font-family: 'Montserrat', sans-serif;
-    text-align: center;
+    text-align: left;
+
+}
+
+.overlay-content-clim {
+    width: 100%;
+    max-height: 200vh; /* Allow more space */
+    overflow-y: auto;
+    font-family: 'Montserrat', sans-serif;
+    text-align: left;
 
 }
 
 .overlay-content iframe {
     width: 100%;
-    min-height: 300px; /* Ensure it has a minimum height */
+    min-height: 600px; /* Ensure it has a minimum height */
     max-height: 85vh;
-    min-width: 30; /* Ensure it has a minimum height */
+    min-width: 30px; /* Ensure it has a minimum height */
     max-width: 85vw;
     border: none;
+    display: block;
 }
 .overlay.active {
+    width: 70%;
     opacity: 1;
     height: auto;
     visibility: visible;
@@ -403,23 +433,23 @@ footer .logos {
 }
 
 
+
 .iframe-container {
-    position: relative;
     width: 100%;
-    padding-bottom: 56.25%; /* 16:9 aspect ratio */
-    height: 0;
+    height: auto;
+    max-height: 85vh;
     overflow: hidden;
+    padding: 0;
+    margin: 0;
 }
 
-.iframe-container iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
-    transform: scale(0.2); /* Scale down the content */
-    transform-origin: 0 1; /* Ensure scaling starts from the top-left corner */
+.iframe-container {
+  width: 100%;
+  height: auto;
+  max-height: 85vh;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
 }
  .menu-toggle {
             position: absolute;
@@ -437,32 +467,41 @@ footer .logos {
             width: 10%;
      }
 
+#climatologicalOverlay iframe {
+  width: 100%;
+  min-height: 400px;
+  height: auto;
+  max-width: 100%;
+  border: none;
+  display: block;
+}
+
+
+
 /* Hide the menu by default on small screens */
 @media (max-width: 768px) {
     
-
-    .overlay {
-        width: 90vw;
-        height: 90vh;
-        transform: translate(0, 0);
-    }
-
-    .overlay .close-btn {
-        top: 5px;
-        right: 5px;
-        width: 25px;
-        height: 25px;
-        font-size: 16px;
+    .overlay{max-height: 70vh; /* Prevent the overlay from growing too much */
+             width: 100%;   
     }
     
-        .iframe-container {
-        padding-bottom: 75%; /* Adjust aspect ratio */
+    .iframe-container {
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        height: auto;
+        max-height: 85vh;
+        overflow: hidden;
     }
-
+    
     .iframe-container iframe {
-        transform: scale(0.7); /* Adjust scaling for smaller screens */
+        width: 100%;
+        height: auto;
+        transform: none;
+        min-width: unset;
+        top: 0;
     }
-
+    
 
     
   .menu-toggle {
@@ -513,11 +552,11 @@ footer .logos {
     display: flex;
     flex-direction: column;
     align-items: center; /* Center align items horizontally */
-    top: 120px;
+    top: 300px;
     padding: 10px;
     border-radius: 5px;
     font-family: 'Montserrat', sans-serif;
-    right: 200px;
+    right: 00px;
 }
     
     .color-bar {
@@ -540,11 +579,11 @@ footer .logos {
 
     
     .dropdown-container {
-    top: 200px;
+    top: 380px;
     font-family: 'Montserrat', sans-serif;
     font-size: 12px;
     text-align: center;
-    right: 260px;
+    right: 55px;
     bottom: auto;
         
 }
@@ -581,9 +620,9 @@ footer .logos {
     }
 
     .header-text {
-        font-size: 20px; /* Smaller title on mobile */
+        font-size: 18px; /* Smaller title on mobile */
         top: 40px; /* Center vertically */
-        left: 155px;
+        left: 130px;
 
         transform: translate(-50%, -50%); /* Adjust position to truly center */
     }
@@ -596,12 +635,12 @@ footer .logos {
         padding: 10px 0;
         position: absolute;
         bottom: 1px; /* Position logos at the bottom of the footer */
-        right: 7%; 
+        right: 2%; 
         z-index: 2; /* Ensure logos appear on top of the background image */
 }
 
      .logo {
-        max-height: 30px; /* Smaller logos on mobile */
+        max-height: 24px; /* Smaller logos on mobile */
         height: auto;
     }
 
@@ -648,7 +687,7 @@ footer .logos {
     .subtitle {
     position: absolute; /* Absolutely position the text */
     top: 70px; /* Adjust to be below the title */
-    left: 120px;
+    left: 105px;
     transform: translate(-50%, -50%); /* Adjust position to truly center */
     color: white; /* Text color */
     font-size: 11px; /* Match font size as needed */
