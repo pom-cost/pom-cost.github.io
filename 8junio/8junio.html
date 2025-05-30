@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Map with Red Dots</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Leaflet CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <!-- PapaParse for CSV -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+
+    <style>
+        html, body, #map {
+            height: 100%;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+    <script>
+        // Initialize the map
+        var map = L.map('map').setView([43.47, -3.765], 14);
+
+        // Add tile layer
+        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            attribution: '&copy; Esri, Maxar, Earthstar Geographics, and the GIS User Community'
+        }).addTo(map);
+
+        // Load CSV and add red dots
+        fetch('8junio_data.csv')  // <-- replace with your actual path
+            .then(response => response.text())
+            .then(csvData => {
+                Papa.parse(csvData, {
+                    header: true,
+                    complete: function(results) {
+                        results.data.forEach(function(row) {
+                            var lat = parseFloat(row.Latitude);
+                            var lon = parseFloat(row.Longitude);
+                            if (!isNaN(lat) && !isNaN(lon)) {
+                                L.circleMarker([lat, lon], {
+                                    radius: 5,
+                                    color: 'red',
+                                    weight: 1,
+                                    fillColor: 'red',
+                                    fillOpacity: 0.8
+                                }).addTo(map);
+                            }
+                        });
+                    }
+                });
+            });
+    </script>
+</body>
+</html>
