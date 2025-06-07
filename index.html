@@ -60,11 +60,15 @@ window.addEventListener("resize", function () {
         <button class="close-btn" onclick="closeOverlay('climatologicalOverlay')">&times;</button>
         <div class="overlay-content">
             <div class="iframe-container">
-                <iframe src="climatological-year/climatological_plot.html"></iframe>
+              <iframe 
+                id="climatologicalIframe"
+                src=""  <!-- leave empty initially -->
+                style="width: 100%; height: 100%; border: none;"
+                loading="lazy"
+                allowfullscreen>
+              </iframe>
             </div>
         </div>
-            
-       
     </div>
 
     <div class="overlay" id="entidadesOverlay">
@@ -104,6 +108,17 @@ window.addEventListener("resize", function () {
     </footer>
 
     <script>
+          function loadClimatologicalPlot() {
+    const iframe = document.getElementById("climatologicalIframe");
+    const isMobile = window.innerWidth < 768;
+
+    iframe.src = isMobile 
+      ? "climatological-year/climatological_plot_mbl.html" 
+      : "climatological-year/climatological_plot.html";
+  }
+
+  document.addEventListener("DOMContentLoaded", loadClimatologicalPlot);
+  window.addEventListener("resize", loadClimatologicalPlot);
         // Initialize the map
         var map = L.map('map').setView([43.44, -3.8], 11); // Center map on a specific location 
 
