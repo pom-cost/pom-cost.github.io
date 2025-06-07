@@ -30,30 +30,104 @@
         L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
             attribution: '&copy; Esri, Maxar, Earthstar Geographics, and the GIS User Community'
         }).addTo(map);
+        var allMarkers = [];
 
-        // Load CSV and add red dots
-        fetch('8junio_data.csv')  // <-- replace with your actual path
-            .then(response => response.text())
-            .then(csvData => {
-                Papa.parse(csvData, {
-                    header: true,
-                    complete: function(results) {
-                        results.data.forEach(function(row) {
-                            var lat = parseFloat(row.Latitude);
-                            var lon = parseFloat(row.Longitude);
-                            if (!isNaN(lat) && !isNaN(lon)) {
-                                L.circleMarker([lat, lon], {
-                                    radius: 5,
-                                    color: 'red',
-                                    weight: 1,
-                                    fillColor: 'red',
-                                    fillOpacity: 0.8
-                                }).addTo(map);
+        // Function to add markers from CSV data
+        function addMarkersFromCSV(csvData) {
+            Papa.parse(csvData, {
+                header: true,
+                complete: function(results) {
+                    results.data.forEach(function(row) {
+                        var lat = parseFloat(row.Latitude);
+                        var lon = parseFloat(row.Longitude);
+                        var temp = row.Temperature;
+                        var temp_anom = row.Temperature_Anomaly;
+                        var date = row.Date;
+                        var month = date.split('-')[1]; // Extract the month from the date
+
+                        // Function to interpolate color between blue and red based on temperature
+                        function getColor(temp_anom) {
+                            var minTemp = -3;
+                            var maxTemp = 3;
+                            var middleTemp = (minTemp + maxTemp) / 2;
+                        
+                            var blue = [0, 0, 255];
+                            var white = [255, 255, 255];
+                            var red = [255, 0, 0];
+                        
+                            var ratio;
+                            var startColor, endColor;
+                        
+                            if (temp_anom < middleTemp) {
+                                ratio = (temp_anom - minTemp) / (middleTemp - minTemp);
+                                startColor = blue;
+                                endColor = white;
+                            } else {
+                                ratio = (temp_anom - middleTemp) / (maxTemp - middleTemp);
+                                startColor = white;
+                                endColor = red;
                             }
-                        });
-                    }
-                });
+
+                            ratio = Math.max(0, Math.min(1, ratio)); // Clamp between 0 and 1
+
+                            var r = Math.round(startColor[0] + ratio * (endColor[0] - startColor[0]));
+                            var g = Math.round(startColor[1] + ratio * (endColor[1] - startColor[1]));
+                            var b = Math.round(startColor[2] + ratio * (endColor[2] - startColor[2]));
+
+                            return `rgb(${r},${g},${b})`;
+                        }
+
+                        var fillColor = getColor(temp_anom);
+
+                        var popupContent = '<div style="width: 200px; font-family: Montserrat, sans-serif; margin-left: 20px;">' +
+                                   '<strong>Sea Temperature:</strong> ' + temp + '°C<br>' +
+                                   '<strong>Date:</strong> ' + date +
+                                   '</div>';
+
+                        var popupOptions = {
+                            maxWidth: 200, // Set the maximum width of the popup box
+                            maxHeight: 80  // Set the maximum height of the popup box
+                        };
+
+
+                        var marker = L.circleMarker([lat, lon], {
+                            radius: 6,           // Marker size
+                            color: 'gray',     // Border color
+                            weight: 1,         // Border thickness
+                            fillColor: fillColor,   // Fill color
+                            fillOpacity: 0.5     // Fill opacity
+                        }).addTo(map)
+                          .bindPopup(popupContent, popupOptions);
+
+                        marker.month = month; // Attach month information to marker
+                        allMarkers.push(marker); // Store all markers
+                        marker.addTo(map); // Add marker to map initially
+                    });
+                }
             });
+        }
+        // Function to filter markers by month
+        function filterMarkersByMonth() {
+            var selectedMonth = document.getElementById('month-select').value;
+
+            // Remove all markers from the map
+            allMarkers.forEach(function(marker) {
+                map.removeLayer(marker);
+            });
+
+            // Add markers for the selected month
+            allMarkers.forEach(function(marker) {
+                if (selectedMonth === 'all' || marker.month === selectedMonth) {
+                    marker.addTo(map);
+                }
+            });
+        }
+
+        // Fetch the CSV file and add markers
+        fetch('../data/data_8junio.csv')
+            .then(response => response.text())
+            .then(csvData => addMarkersFromCSV(csvData));
+
     </script>
 </body>
 </html>

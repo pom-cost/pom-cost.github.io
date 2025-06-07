@@ -534,7 +534,7 @@ footer .logos {
     position: absolute;
     top: 50px;
     width: 180px;
-    height: 90px;
+    height: 110px;
 }
 
 .map-menu ul li {
@@ -552,7 +552,7 @@ footer .logos {
     display: flex;
     flex-direction: column;
     align-items: center; /* Center align items horizontally */
-    top: 300px;
+    top: 200px;
     padding: 10px;
     border-radius: 5px;
     font-family: 'Montserrat', sans-serif;
@@ -579,7 +579,7 @@ footer .logos {
 
     
     .dropdown-container {
-    top: 380px;
+    top: 280px;
     font-family: 'Montserrat', sans-serif;
     font-size: 12px;
     text-align: center;
