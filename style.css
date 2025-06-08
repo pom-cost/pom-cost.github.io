@@ -132,8 +132,8 @@ header img {
 .map-menu {
     display: block;
     position: absolute;
-    top: 50px;
-    right: 50px;
+    top: 100px;
+    right: 30px;
     background: rgba(255, 255, 255, 0);
     padding: 10px;
     border-radius: 5px;
@@ -445,7 +445,7 @@ footer .logos {
 
 .iframe-container {
   width: 100%;
-  height: 100%;
+  height: auto;
   max-height: 85vh;
   overflow: hidden;
   padding: 0;
@@ -480,12 +480,6 @@ footer .logos {
 
 /* Hide the menu by default on small screens */
 @media (max-width: 768px) {
-
-    .climatological-overlay {
-        width: 95vw;
-        height: 85vh;     /* Slightly smaller for mobile */
-    }
-
     
     .overlay{max-height: 70vh; /* Prevent the overlay from growing too much */
              width: 100%;   
@@ -493,7 +487,6 @@ footer .logos {
     
     .iframe-container {
         width: 100%;
-        height: 100%;
         padding: 0;
         margin: 0;
         height: auto;
@@ -501,12 +494,13 @@ footer .logos {
         overflow: hidden;
     }
     
-.iframe-container iframe {
-    width: 100%;
-    height: 100%;         /* ✅ Critical for stretch_both to work */
-    border: none;
-    display: block;
-}
+    .iframe-container iframe {
+        width: 100%;
+        height: auto;
+        transform: none;
+        min-width: unset;
+        top: 0;
+    }
     
 
     

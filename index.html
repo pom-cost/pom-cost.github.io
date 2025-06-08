@@ -12,11 +12,13 @@
 </head>
 
 <script>
-function resizeIframe(iframe) {
-    if (iframe.contentWindow.document.body) {
-        iframe.style.height = iframe.contentWindow.document.body.scrollHeight + "px";
-    }
-}
+iframe.addEventListener("load", function () {
+    resizeIframe(iframe);
+});
+...
+window.addEventListener("resize", function () {
+    resizeIframe(iframe);
+});
 
 // Resize iframe when it loads
 document.addEventListener("DOMContentLoaded", function () {
