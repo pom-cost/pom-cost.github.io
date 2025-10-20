@@ -1,6 +1,5 @@
 // Cleaned-up JavaScript for index.html
-// Include this file in index.html (replace the inline <script> block) with:
-// <script src="assets/main.js"></script>
+// Include this file in index.html (replace the inline <script> block) with: <script src="assets/main.js"></script>
 
 (function () {
   'use strict';
