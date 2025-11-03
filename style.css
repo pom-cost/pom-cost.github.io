@@ -697,8 +697,59 @@ footer .logos {
     text-transform: none; /* Make text appear in capital letters */
     font-weight: normal; /* Make text bold */
 }
+
+    /* --- MOBILE PATCH START --- */
+
+    /* Ensure active overlays use full width on phones */
+    .overlay.active,
+    .climatological-overlay.active {
+      width: 100% !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) scale(1) !important;
+      max-width: 100% !important;
+      padding: 12px !important;
+      box-sizing: border-box !important;
+    }
+
+    /* Make iframe heights reasonable on phones */
+    #climatologicalOverlay iframe,
+    .overlay-content iframe {
+      min-height: 40vh !important;
+      height: auto !important;
+      max-height: 85vh !important;
+    }
+
+    /* Allow scrolling inside overlays and smooth touch scrolling */
+    .climatological-overlay,
+    .overlay {
+      overflow-y: auto !important;
+      -webkit-overflow-scrolling: touch !important;
+    }
+
+    /* Reduce large fixed right offsets that push controls off-screen */
+    .map-menu,
+    .color-bar-container,
+    .dropdown-container {
+      right: 10px !important;
+      left: auto !important;
+    }
+
+    /* Ensure menu is reachable and not hidden off-canvas */
+    .map-menu ul {
+      width: auto !important;
+      right: 10px !important;
+    }
+
+    /* Reduce iframe min-height in iframe-container on very small screens */
+    .iframe-container iframe {
+      min-height: 30vh !important;
+    }
+
+    /* --- MOBILE PATCH END --- */
 }
 
 /* Keep the menu always visible on larger screens */
 
 @media (min-width: 769px) {
+
+}
