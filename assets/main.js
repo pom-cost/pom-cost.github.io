@@ -102,8 +102,9 @@
     const colorBarControl = L.control({ position: 'bottomleft' });
     colorBarControl.onAdd = function () {
       const div = L.DomUtil.create('div', 'color-bar-container');
-      div.innerHTML = '<div class="color-bar-title">Relative Temperature to Sardinero (70s)</div>' +
-                      '<div class="color-bar">-3°C to 3°C</div>';
+      div.innerHTML = '<div class="color-bar-title">Anomalía respecto Sardinero (años 70)</div>' +
+                      '<div class="color-bar"></div>' +
+                      '<div class="color-bar-labels"><span>-3°C</span><span>0°C</span><span>+3°C</span></div>';
       return div;
     };
     colorBarControl.addTo(map);
