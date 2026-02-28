@@ -402,6 +402,20 @@ img { max-width: 100%; height: auto; display: block; }
     letter-spacing: 0.04em;
 }
 
+.footer-powered { 
+    font-size: 0.8rem; /* més petit */ 
+    margin-top: -5px; /* més a prop del text de sobre */ 
+    color: #666; /* opcional: color més suau */
+} 
+
+.footer-powered a { 
+    color: inherit; /* mateix color que el text */ 
+    text-decoration: none; /* sense subratllat */} 
+
+.footer-powered a:hover { 
+    text-decoration: underline; /* subratllat al passar el ratolí */ 
+}
+
 /* ═══════════════════════════════════════════════
    LEAFLET CONTROLS INSIDE MAP
    ═══════════════════════════════════════════════ */
