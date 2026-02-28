@@ -277,29 +277,68 @@ def plot_climatological_year(file_path):
 
 def plot_obs(df):
     hover = HoverTool(tooltips=[
-        ('Date', '@Date{%F}'),         # Show Date in YYYY-MM-DD format
+        ('Date', '@Date{%F}'),
         ('Temperature', '@Temperature'),
-        ('Anomaly', '@Temperature_Anomaly')  # Renamed as "Anomaly"
+        ('Anomaly', '@Temperature_Anomaly')
     ], formatters={'@Date': 'datetime'})
-    
+
     scatter_plot = hv.Scatter(
-      df,
-      kdims=['fractional_time'],
-      vdims=['Temperature', 'Temperature_Anomaly', 'Date']
+        df,
+        kdims=['fractional_time'],
+        vdims=['Temperature', 'Temperature_Anomaly', 'Date']
     ).opts(
-      tools=[hover, 'pan', 'wheel_zoom', 'box_zoom', 'reset'],
-      width=800,
-      height=400,
-      title='Interactive Climatological Data',
-      color='Temperature_Anomaly',      # Color based on Temperature_Anomaly
-      cmap='coolwarm',                  # Coolwarm color map
-      clim=(-3, 3),
-      size=8,
-      xlabel='Month',
-      ylabel=r"Temperature [°C]",
-      legend_position='top_left'
-      )
+        tools=[hover, 'pan', 'wheel_zoom', 'box_zoom', 'reset'],
+        color='Temperature_Anomaly',
+        cmap='coolwarm',
+        clim=(-3, 3),
+        size=5,
+        alpha=0.4,
+        xlabel='Month',
+        ylabel=r"Temperature [°C]",
+        legend_position='top_left'
+    )
     return scatter_plot
+
+
+def plot_rolling_by_year(df, window=7):
+    """
+    For each year present in the data, compute a rolling median of temperature
+    vs fractional_time and return a HoloViews Overlay of smooth Curves.
+    Colors cycle automatically so future years are handled.
+    """
+    df = df.copy()
+    df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
+    df = df.dropna(subset=['Date', 'Temperature', 'fractional_time'])
+    df['year'] = df['Date'].dt.year
+
+    # Distinct warm colours — avoid blue already used by the climatology median
+    year_colors = ['#e74c3c', '#2ecc71', '#f39c12', '#9b59b6',
+                   '#e67e22', '#1abc9c', '#e91e63', '#ff5722']
+
+    curves = []
+    for i, year in enumerate(sorted(df['year'].unique())):
+        year_df = (df[df['year'] == year]
+                   .sort_values('fractional_time')
+                   .reset_index(drop=True))
+        if len(year_df) < 3:
+            continue
+
+        w = min(window, max(2, len(year_df) // 2))
+        rolling = (year_df['Temperature']
+                   .rolling(window=w, min_periods=2, center=True)
+                   .median())
+        valid = rolling.notna()
+        if valid.sum() < 2:
+            continue
+
+        color = year_colors[i % len(year_colors)]
+        curve = hv.Curve(
+            (year_df['fractional_time'][valid].values, rolling[valid].values),
+            label=str(year)
+        ).opts(color=color, line_width=2.5)
+        curves.append(curve)
+
+    return hv.Overlay(curves) if curves else hv.Curve([])
 
 def get_data_from_temp_sensors_full(filepath, team_name='Escuela Salle', location='IEO', lat=None, lon=None):
     # Read the data
