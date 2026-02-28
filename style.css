@@ -460,10 +460,31 @@ img { max-width: 100%; height: auto; display: block; }
     cursor: pointer;
 }
 
-/* Popup inside map */
+/* Popup inside map — data points */
 .leaflet-popup-content {
     font-family: var(--font-head);
     font-size: 13px;
+}
+
+/* Time-series station popups — styled, no default box */
+.timeseries-popup .leaflet-popup-content-wrapper {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid rgba(0, 119, 182, 0.15);
+    backdrop-filter: blur(6px);
+}
+.timeseries-popup .leaflet-popup-content {
+    margin: 0;
+}
+.timeseries-popup .leaflet-popup-tip {
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: none;
+}
+.timeseries-popup .leaflet-popup-tip-container {
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.10));
 }
 
 /* ═══════════════════════════════════════════════
@@ -510,8 +531,11 @@ img { max-width: 100%; height: auto; display: block; }
     /* Cards */
     .cards-grid { grid-template-columns: 1fr; }
 
-    /* Climatological iframe */
-    .iframe-wrapper iframe { height: 55vh; min-height: 300px; }
+    /* Climatological iframe — match the 250px plot height + toolbar */
+    .iframe-wrapper iframe { height: 300px; min-height: unset; }
+
+    /* Prevent horizontal overflow if plot slightly wider than screen */
+    .iframe-wrapper { overflow: hidden; }
 
     /* Footer logos */
     .footer-logos img { max-height: 36px; }

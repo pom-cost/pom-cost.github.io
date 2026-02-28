@@ -324,15 +324,15 @@
     const sites = [
       { lat: 43.4756, lon: -3.7847, popup: 'sardinero_plot.html', w: 400, h: 200 },
       { lat: 43.4704, lon: -3.7653, popup: 'magdalena_plot.html', w: 400, h: 200 },
-      { lat: 43.4508, lon: -3.8215, popup: 'miguel_plot.html', w: 420, h: 250 },
-      { lat: 43.4634, lon: -3.7827, popup: 'IEO_plot.html', w: 420, h: 250 }
+      { lat: 43.4508, lon: -3.8215, popup: 'miguel_plot.html', w: 420, h: 200 },
+      { lat: 43.4634, lon: -3.7827, popup: 'IEO_plot.html', w: 420, h: 200 }
     ];
 
     sites.forEach(s => {
       const content = `<div style="width:${s.w}px; height:${s.h}px; overflow:hidden;">` +
                       `<iframe src="${s.popup}" style="border:none; width:100%; height:100%;" loading="lazy"></iframe>` +
                       `</div>`;
-      L.marker([s.lat, s.lon], { icon: watericonblue }).addTo(map).bindPopup(content);
+      L.marker([s.lat, s.lon], { icon: watericonblue }).addTo(map).bindPopup(content, { className: 'timeseries-popup', maxWidth: s.w + 10 });
     });
 
     // Debounced window resize: adjust overlays and (if climatological overlay open) update src
