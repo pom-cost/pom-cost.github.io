@@ -300,16 +300,17 @@ def plot_obs(df):
     return scatter_plot
 
 
-def plot_rolling_by_year(df, window=7):
+def plot_rolling_by_year(df, window=11, min_year=2025):
     """
-    For each year present in the data, compute a rolling median of temperature
-    vs fractional_time and return a HoloViews Overlay of smooth Curves.
+    For each year >= min_year, compute a rolling median + Savitzky-Golay smooth
+    of temperature vs fractional_time and return a HoloViews Overlay of Curves.
     Colors cycle automatically so future years are handled.
     """
     df = df.copy()
     df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
     df = df.dropna(subset=['Date', 'Temperature', 'fractional_time'])
     df['year'] = df['Date'].dt.year
+    df = df[df['year'] >= min_year]
 
     # Distinct warm colours — avoid blue already used by the climatology median
     year_colors = ['#e74c3c', '#2ecc71', '#f39c12', '#9b59b6',
@@ -320,20 +321,28 @@ def plot_rolling_by_year(df, window=7):
         year_df = (df[df['year'] == year]
                    .sort_values('fractional_time')
                    .reset_index(drop=True))
-        if len(year_df) < 3:
+        if len(year_df) < 5:
             continue
 
-        w = min(window, max(2, len(year_df) // 2))
+        w = min(window, max(3, len(year_df) // 2))
         rolling = (year_df['Temperature']
-                   .rolling(window=w, min_periods=2, center=True)
+                   .rolling(window=w, min_periods=3, center=True)
                    .median())
         valid = rolling.notna()
-        if valid.sum() < 2:
+        if valid.sum() < 5:
             continue
+
+        # Apply Savitzky-Golay for additional smoothness
+        vals = rolling[valid].values
+        sg_window = min(len(vals), 15)
+        if sg_window % 2 == 0:
+            sg_window -= 1
+        sg_window = max(sg_window, 5)
+        smoothed = savgol_filter(vals, window_length=sg_window, polyorder=2)
 
         color = year_colors[i % len(year_colors)]
         curve = hv.Curve(
-            (year_df['fractional_time'][valid].values, rolling[valid].values),
+            (year_df['fractional_time'][valid].values, smoothed),
             label=str(year)
         ).opts(color=color, line_width=2.5)
         curves.append(curve)
