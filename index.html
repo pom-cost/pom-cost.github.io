@@ -1,87 +1,151 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Poniendo Ojos al Mar</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poniendo Ojos al Mar</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;800&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+    <!-- Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css"/>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+
+    <link rel="stylesheet" href="style.css"/>
 </head>
 
 <body>
-    <header>
-        <div class="header-text">Poniendo Ojos al Mar</div>
-        <div class="subtitle"><a href="https://www.youtube.com/watch?v=Ng2vTXxnD20" target="_blank">Tomando el pulso del Océano</a></div>
-        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
-    </header>
-    
-    <div id="map"></div>
 
-    <nav class="map-menu">
-        <ul>
-            <li><a href="#" onclick="toggleOverlay('proyectoOverlay')">¿Qué sabemos?</a></li>
-            <li><a href="#" onclick="toggleOverlay('climatologicalOverlay')">Perspectiva climatológica</a></li>
-            <li><a href="https://github.com/pom-cost/pom-cost.github.io/tree/main/data" target="_blank">Datos</a></li>
-            <li><a href="#" onclick="toggleOverlay('entidadesOverlay')">Entidades participantes</a></li>
-            <li><a href="#" onclick="toggleOverlay('8junioOverlay')">Día de los Océanos</a></li>
-        </ul>
+    <!-- ═══════════════ NAVBAR ═══════════════ -->
+    <nav class="navbar" id="navbar">
+        <div class="navbar-inner">
+            <a class="navbar-brand" href="#">Poniendo Ojos al Mar</a>
+            <button class="navbar-toggle" id="navToggle" aria-label="Menú">&#9776;</button>
+            <ul class="navbar-links" id="navLinks">
+                <li><a href="#que-sabemos">¿Qué sabemos?</a></li>
+                <li><a href="#climatologia">Climatología</a></li>
+                <li><a href="#datos">Datos</a></li>
+                <li><a href="#entidades">Entidades</a></li>
+                <li><a href="#dia-oceanos">Día del Océano</a></li>
+            </ul>
+        </div>
     </nav>
-   
-    <div class="overlay climatological-overlay" id="climatologicalOverlay">
-        <button class="close-btn" onclick="closeOverlay('climatologicalOverlay')">&times;</button>
-        <div class="overlay-content">
-            <div class="iframe-container">
-              <iframe 
-                id="climatologicalIframe"
-                src=""
-                style="width: 100%; height: 100%; border: none;"
-                loading="lazy"
-                allowfullscreen>
-              </iframe>
+
+    <!-- ═══════════════ HERO ═══════════════ -->
+    <section class="hero" id="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Poniendo Ojos al Mar</h1>
+            <p class="hero-subtitle">
+                    Un proyecto de ciencia ciudadana para monitorear la temperatura del mar de Cantabria
+            </p>
+            <a class="hero-scroll-btn" href="#mapa" aria-label="Ir al mapa">&#8595;</a>
+        </div>
+    </section>
+
+    <!-- ═══════════════ MAP ═══════════════ -->
+    <section id="mapa" class="map-section">
+        <div id="map"></div>
+    </section>
+
+    <!-- ═══════════════ QUÉ SABEMOS ═══════════════ -->
+    <section id="que-sabemos" class="content-section section-light">
+        <div class="container">
+            <h2 class="section-title">¿Qué sabemos?</h2>
+
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon"></div>
+                    <h3>El océano y el cambio climático</h3>
+                    <p> Los océanos son una pieza clave para el clima y para la vida en la Tierra. Producen cerca del 50% del oxígeno de la atmósfera y absorben aproximadamente una cuarta parte del dióxido de carbono que emitimos con la actividad humana. Esa capacidad reguladora ayuda a frenar el aumento de la temperatura global: de hecho, más del 90% del exceso de calor asociado al cambio climático ha sido absorbido por el océano. Por eso, monitorear su estado es clave para entender y anticipar cómo seguirá desempeñando este papel regulador.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"></div>
+                    <h3>La importancia de la ciencia ciudadana</h3>
+                    <p> Paradójicamente, la franja costera es también la zona con menos acceso a mediciones oceanográficas directas, como la temperatura. Los datos satelitales suelen ser más ruidosos cerca de la costa debido a interferencias terrestres, y los buques oceanográficos convencionales están pensados para trabajar en aguas profundas, pero son más limitados a la hora de medir en aguas someras. Por eso, la participación ciudadana es clave para llenar este vacío.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"></div>
+                    <h3>¿Para qué sirven los datos?</h3>
+                    <p>Estos datos no solo permiten completar el monitoreo global del océano, sino también seguir el impacto local de eventos como las olas de calor marinas, identificar tendencias a largo plazo y comprender mejor cómo el cambio climático está afectando nuestras costas. En Santander, además, contamos con registros históricos desde los años 70 en la playa del Sardinero, de gran valor científico, que nos ayudarán a entender cómo está cambiando el estado del mar en comparación con el pasado.</p>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <div class="overlay" id="entidadesOverlay">
-        <button class="close-btn" onclick="closeOverlay('entidadesOverlay')">&times;</button>
-        <div class="overlay-content">
-            <iframe src="entidades/index.html"></iframe>
+    <!-- ═══════════════ CLIMATOLOGÍA ═══════════════ -->
+    <section id="climatologia" class="content-section section-dark">
+        <div class="container">
+            <h2 class="section-title">Perspectiva Climatológica</h2>
+            <p class="section-lead">Comparativa de la temperatura actual respecto a los valores históricos de referencia de la playa el Sardinero (1970-1978).</p>
+            <div class="iframe-wrapper">
+                <iframe
+                    id="climatologicalIframe"
+                    src=""
+                    loading="lazy"
+                    allowfullscreen
+                    title="Perspectiva climatológica">
+                </iframe>
+            </div>
         </div>
-    </div>
-    
-    <div class="overlay" id="downloadOverlay">
-        <button class="close-btn" onclick="closeOverlay('downloadOverlay')">&times;</button>
-        <div class="overlay-content">
-            <iframe src="data/datos.html"></iframe>
-        </div>
-    </div>
+    </section>
 
-    <div class="overlay" id="proyectoOverlay">
-        <button class="close-btn" onclick="closeOverlay('proyectoOverlay')">&times;</button>
-        <div class="overlay-content">
-            <iframe src="info/info.html"></iframe>
+    <!-- ═══════════════ DATOS ═══════════════ -->
+    <section id="datos" class="content-section section-light">
+        <div class="container">
+            <h2 class="section-title">Datos</h2>
+            <p class="section-lead">Todos los datos recogidos y procesados son de acceso abierto y están disponibles en nuestro repositorio.</p>
+            <div class="data-cta">
+                <a class="btn-primary"
+                   href="https://github.com/pom-cost/pom-cost.github.io/tree/main/data"
+                   target="_blank" rel="noopener">
+                    Ver datos en GitHub
+                </a>
+            </div>
         </div>
-    </div>
+    </section>
 
-    <div class="overlay" id="8junioOverlay">
-        <button class="close-btn" onclick="closeOverlay('8junioOverlay')">&times;</button>
-        <div class="overlay-content">
-            <iframe src="8junio/8junio.html"></iframe>
+    <!-- ═══════════════ ENTIDADES ═══════════════ -->
+    <section id="entidades" class="content-section section-dark">
+        <div class="container">
+            <h2 class="section-title">Entidades Participantes</h2>
+            <p class="section-lead">Gracias a la colaboración de escuelas el proyecto es posible.</p>
+            <ul class="institutions-list">
+                <li><a href="https://miguelbravo.es/" target="_blank" rel="noopener">Colegio Miguel Bravo A.A. La Salle</a></li>
+                <li><a href="https://www.escolapios-santander.org/" target="_blank" rel="noopener">Colegio Calasanz</a></li>
+                <li><a href="https://www.ieo-santander.net/" target="_blank" rel="noopener">Centro Oceanográfico de Santander</a></li>
+            </ul>
         </div>
-    </div>
-   
-    <!-- Footer section -->
-    <footer>
-        <div class="logos">
-            <img src="assets/logoNexGen.png" alt="Logo NextGen" class="logo">
-            <img src="assets/logoIEO-CSIC.png" alt="Logo IEO-CSIC" class="logo">
+    </section>
+
+    <!-- ═══════════════ DÍA DEL OCÉANO ═══════════════ -->
+    <section id="dia-oceanos" class="content-section section-light">
+        <div class="container">
+            <h2 class="section-title">Día Mundial de los Océanos</h2>
+            <p class="section-lead">El 8 de junio celebramos el Día Mundial de los Océanos con mediciones sincronizadas a lo largo de la entrada de la bahía de Santander.</p>
+            <div class="data-cta">
+                <a class="btn-primary" href="8junio/8junio.html" target="_blank" rel="noopener">
+                    Ver mapa del 8 de Junio
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════ FOOTER ═══════════════ -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-logos">
+                <img src="assets/logoNexGen.png" alt="Logo NextGen">
+                <img src="assets/logoIEO-CSIC.png" alt="Logo IEO-CSIC">
+            </div>
+            <p class="footer-copy">&copy; 2025 Poniendo Ojos al Mar</p>
+            <p class="footer-powered"> powered by <a href="https://github.com/ignasivalles" target="_blank">@ignasivalles</a> </p>
         </div>
     </footer>
 
-    <!-- Load cleaned external JS (replace the large inline script with this file) -->
     <script src="assets/main.js"></script>
+    <script src="assets/nav.js"></script>
 </body>
 </html>
