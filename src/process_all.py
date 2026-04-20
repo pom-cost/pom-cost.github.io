@@ -92,6 +92,29 @@ def process_raw_files(raw_dir):
         all_data['Temperature'] - all_data['climatology_temp']
     ).round(3)
 
+    # ── Outlier filter ────────────────────────────────────────────────────────
+    before = len(all_data)
+
+    # 1. Physical bounds: impossible sea surface temperatures
+    all_data = all_data[
+        (all_data['Temperature'] >= 5) & (all_data['Temperature'] <= 27)
+    ]
+
+    # 2. Monthly IQR: catch algorithm failures (e.g. air temp in summer)
+    month = all_data['Date'].dt.month
+    keep = pd.Series(True, index=all_data.index)
+    for m in month.unique():
+        idx = all_data.index[month == m]
+        grp = all_data.loc[idx, 'Temperature']
+        if len(grp) < 4:
+            continue
+        q1, q3 = grp.quantile(0.25), grp.quantile(0.75)
+        iqr = q3 - q1
+        keep.loc[idx] = (grp >= q1 - 2 * iqr) & (grp <= q3 + 2 * iqr)
+    all_data = all_data[keep].reset_index(drop=True)
+
+    print(f"After outlier filter: {len(all_data)} rows (removed {before - len(all_data)})")
+
     # Final column order (matches existing individual_data.csv)
     cols = ['Date', 'Latitude', 'Longitude', 'Temperature',
             'fractional_time', 'Team', 'climatology_temp', 'Temperature_Anomaly']
