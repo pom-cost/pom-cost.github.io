@@ -31,7 +31,7 @@ RAW_DIR   = ROOT / 'data' / 'raw'
 MB_DIR    = ROOT / 'data' / 'Miguel_Bravo'
 OUT_HTML  = ROOT / 'miguel_plot.html'
 
-MB_PREFIXES = ('MB', 'Colegio MB')
+MB_PREFIXES = ('MB', 'Colegio MB', 'Miguel')
 
 
 def sync_mb_files():
