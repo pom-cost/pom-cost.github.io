@@ -1,0 +1,35 @@
+------------------------------,--------------------
+www.electricblue.eu, Portugal
+------------------------------,--------------------
+EnvLogger version, T2.4
+EnvLogger Viewer version, 6.1
+downloading device type, android
+device, CPH2637
+device name, OPPO Reno12 FS 5G
+downloading mode, manual
+------------------------------,--------------------
+serial number, 04A9 3300 C40E 01
+custom name, Colegio MB
+temperature, degrees Celsius
+time zone, UTC+0000
+sampling resolution, 0.1
+samples, 13
+time diff [logger-smartphone](sec), -1
+lat, 43.451243
+long, -3.821678
+accuracy (m), 11.7
+------------------------------,--------------------
+time,temp
+2025-05-27 09:13:40,NA
+2025-05-27 09:14:00,24.6
+2025-05-27 09:14:20,24.3
+2025-05-27 09:14:40,24.0
+2025-05-27 09:15:00,23.0
+2025-05-27 09:15:20,21.9
+2025-05-27 09:15:40,21.1
+2025-05-27 09:16:00,20.5
+2025-05-27 09:16:20,19.9
+2025-05-27 09:16:40,19.5
+2025-05-27 09:17:00,19.2
+2025-05-27 09:17:20,18.9
+2025-05-27 09:17:40,18.7
