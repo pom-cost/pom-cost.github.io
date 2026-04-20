@@ -1,0 +1,29 @@
+------------------------------,--------------------
+www.electricblue.eu, Portugal
+------------------------------,--------------------
+EnvLogger version, T2.4
+EnvLogger Viewer version, 1.18
+downloading device type, iphone
+device, iPhone
+downloading mode, manual
+------------------------------,--------------------
+serial number, 04B5 1C00 7F48 0C
+custom name, escuela
+temperature, degrees Celsius
+time zone, UTC+0000
+sampling resolution, 0.1
+samples, 10
+time diff [logger-smartphone](sec), -3
+lat, 43.463586
+long, -3.782896
+accuracy (m), 43.7
+------------------------------,--------------------
+time,temp
+2025-01-28 16:11:39,NA
+2025-01-28 16:11:49,NA
+2025-01-28 16:11:59,23.6
+2025-01-28 16:12:09,24.0
+2025-01-28 16:12:19,24.2
+2025-01-28 16:12:29,24.4
+2025-01-28 16:12:39,24.5
+2025-01-28 16:12:49,24.7
