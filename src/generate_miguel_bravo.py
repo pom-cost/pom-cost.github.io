@@ -94,7 +94,7 @@ def make_plot(df):
         title='Sea Temperature — Miguel Bravo School',
         xlabel='Date', ylabel='Temperature [°C]',
         show_grid=True,
-        responsive=True, height=400,
+        responsive=True, height=200,
     )
 
 
