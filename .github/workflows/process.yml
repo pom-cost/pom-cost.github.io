@@ -44,3 +44,6 @@ jobs:
                   climatological-year/climatological_plot_mbl.html
           git diff --cached --quiet || git commit -m "data: regenerate outputs [skip ci]"
           git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # ADD THIS SECTION
+
