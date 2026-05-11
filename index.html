@@ -25,10 +25,10 @@
             <button class="navbar-toggle" id="navToggle" aria-label="Menú">&#9776;</button>
             <ul class="navbar-links" id="navLinks">
                 <li><a href="#que-sabemos">¿Qué sabemos?</a></li>
-                <li><a href="#climatologia">Climatología</a></li>
-                <li><a href="#datos">Datos</a></li>
+                <li><a href="#serie-temporal">Temperatura</a></li>
+                <li><a href="#cronicas">Crónicas</a></li>
                 <li><a href="#entidades">Entidades</a></li>
-                <li><a href="#dia-oceanos">Día del Océano</a></li>
+                <li><a href="https://github.com/pom-cost/pom-cost.github.io/tree/main/data" target="_blank" rel="noopener">Datos</a></li>
             </ul>
         </div>
     </nav>
@@ -75,15 +75,32 @@
         </div>
     </section>
 
+    <!-- ═══════════════ SERIE TEMPORAL ═══════════════ -->
+    <section id="serie-temporal" class="content-section section-dark">
+        <div class="container">
+            <h2 class="section-title">Serie Temporal</h2>
+            <p class="section-lead">Temperaturas registradas durante las sesiones de surf a lo largo del tiempo, con tendencia suavizada.</p>
+            <div class="iframe-wrapper">
+                <iframe
+                    id="timeseriesIframe"
+                    src="plots/timeseries_plot.html"
+                    loading="lazy"
+                    allowfullscreen
+                    title="Serie temporal de temperatura">
+                </iframe>
+            </div>
+        </div>
+    </section>
+
     <!-- ═══════════════ CLIMATOLOGÍA ═══════════════ -->
-    <section id="climatologia" class="content-section section-dark">
+    <section id="climatologia" class="content-section section-light">
         <div class="container">
             <h2 class="section-title">Perspectiva Climatológica</h2>
             <p class="section-lead">Comparativa de la temperatura actual respecto a los valores históricos de referencia de la playa el Sardinero (1970-1978).</p>
             <div class="iframe-wrapper">
                 <iframe
                     id="climatologicalIframe"
-                    src=""
+                    src="plots/climatology_plot.html"
                     loading="lazy"
                     allowfullscreen
                     title="Perspectiva climatológica">
@@ -92,17 +109,20 @@
         </div>
     </section>
 
-    <!-- ═══════════════ DATOS ═══════════════ -->
-    <section id="datos" class="content-section section-light">
+    <!-- ═══════════════ CRÓNICAS ═══════════════ -->
+    <section id="cronicas" class="content-section section-light">
         <div class="container">
-            <h2 class="section-title">Datos</h2>
-            <p class="section-lead">Todos los datos recogidos y procesados estan disponibles en:.</p>
-            <div class="data-cta">
-                <a class="btn-primary"
-                   href="https://github.com/pom-cost/pom-cost.github.io/tree/main/data"
-                   target="_blank" rel="noopener">
-                    Ver datos en Github
-                </a>
+            <h2 class="section-title">Crónicas</h2>
+            <p class="section-lead">Historias contadas con datos del mar.</p>
+            <div class="cards-grid">
+                <div class="card">
+                    <h3><a href="cronicas/8junio/8junio.html">Día Mundial de los Océanos</a></h3>
+                    <p>El 8 de junio medimos la temperatura de forma sincronizada a lo largo de la entrada de la bahía de Santander.</p>
+                </div>
+                <div class="card">
+                    <h3><a href="cronicas/afloramiento_2025/index.html">El Espiral del Verano</a></h3>
+                    <p>En agosto de 2025, un viento del este sostenido enfrió bruscamente la costa cantábrica. Una historia contada con datos de satélite y temperatura superficial.</p>
+                </div>
             </div>
         </div>
     </section>
@@ -117,19 +137,6 @@
                 <li><a href="https://www.escolapios-santander.org/" target="_blank" rel="noopener">Colegio Calasanz</a></li>
                 <li><a href="https://www.ieo-santander.net/" target="_blank" rel="noopener">Centro Oceanográfico de Santander</a></li>
             </ul>
-        </div>
-    </section>
-
-    <!-- ═══════════════ DÍA DEL OCÉANO ═══════════════ -->
-    <section id="dia-oceanos" class="content-section section-light">
-        <div class="container">
-            <h2 class="section-title">Día Mundial de los Océanos</h2>
-            <p class="section-lead">El 8 de junio celebramos el Día Mundial de los Océanos con mediciones sincronizadas a lo largo de la entrada de la bahía de Santander.</p>
-            <div class="data-cta">
-                <a class="btn-primary" href="8junio/8junio.html" target="_blank" rel="noopener">
-                    Ver mapa del 8 de Junio
-                </a>
-            </div>
         </div>
     </section>
 
