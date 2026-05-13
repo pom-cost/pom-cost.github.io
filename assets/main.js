@@ -268,8 +268,7 @@
   function setClimatologicalSrcIfNeeded() {
     const iframe = document.getElementById(CLIM_IFRAME_ID);
     if (!iframe) return;
-    const isMobile = window.innerWidth < MOBILE_BREAKPOINT;
-    const desired = isMobile ? 'climatological-year/climatological_plot_mbl.html' : 'climatological-year/climatological_plot.html';
+    const desired = 'plots/climatology_plot.html';
     if (iframe.src && iframe.getAttribute('data-src') === desired) {
       // already set to desired file
       return;

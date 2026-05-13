@@ -5,7 +5,6 @@
   const navbar   = document.getElementById('navbar');
   const toggle   = document.getElementById('navToggle');
   const navLinks = document.getElementById('navLinks');
-  const MOBILE   = 768;
 
   // ── Navbar shrink on scroll ──────────────────
   window.addEventListener('scroll', function () {
@@ -37,10 +36,7 @@
 
     function loadClimIframe() {
       if (loaded) return;
-      const isMobile = window.innerWidth < MOBILE;
-      climIframe.src = isMobile
-        ? 'climatological-year/climatological_plot_mbl.html'
-        : 'climatological-year/climatological_plot.html';
+      climIframe.src = 'plots/climatology_plot.html';
       loaded = true;
     }
 
@@ -63,13 +59,10 @@
       }, { passive: true });
     }
 
-    // Also reload with correct src on resize (e.g. rotate phone)
+    // Also reload on resize if needed
     window.addEventListener('resize', function () {
       if (!loaded) return;
-      const isMobile = window.innerWidth < MOBILE;
-      const desired = isMobile
-        ? 'climatological-year/climatological_plot_mbl.html'
-        : 'climatological-year/climatological_plot.html';
+      const desired = 'plots/climatology_plot.html';
       if (climIframe.src !== desired) {
         climIframe.src = desired;
       }

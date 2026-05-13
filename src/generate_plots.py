@@ -228,10 +228,11 @@ def make_climatology(df):
 
 # ── Save ──────────────────────────────────────────────────────────────────────
 def save_fig(fig, path):
+    fig.update_layout(height=520)
     fig.write_html(
         str(path),
         include_plotlyjs='cdn',
-        full_html=True,
+        full_html=False,
         config={'displayModeBar': 'hover', 'scrollZoom': False},
     )
 
