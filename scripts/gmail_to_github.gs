@@ -25,7 +25,7 @@
 
 var GITHUB_OWNER  = 'pom-cost';
 var GITHUB_REPO   = 'pom-cost.github.io';
-var GITHUB_BRANCH = 'redesign/beautiful-jekyll-style'; // update to 'main' after branch cleanup
+var GITHUB_BRANCH = 'main';
 var GITHUB_PATH   = 'data/raw';
 var GMAIL_QUERY   = 'subject:EnvLogger has:attachment filename:csv';
 var PROCESSED_LABEL = 'envlogger-processed';
