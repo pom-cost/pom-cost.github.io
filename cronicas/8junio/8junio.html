@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Día Mundial de los Océanos 2025 — Poniendo Ojos al Mar</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;800&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <link rel="stylesheet" href="../../style.css" />
+
+    <style>
+        /* ── Page header ── */
+        .story-header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            padding: calc(var(--navbar-h) + 48px) 24px 48px;
+            text-align: center;
+            color: #fff;
+        }
+        .story-header .back-link {
+            display: inline-block;
+            font-family: var(--font-head);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 24px;
+            transition: color var(--transition);
+        }
+        .story-header .back-link:hover { color: #fff; }
+        .story-header .back-link::before { content: '← '; }
+
+        .story-header h1 {
+            font-family: var(--font-head);
+            font-weight: 800;
+            font-size: clamp(1.8rem, 5vw, 3.2rem);
+            letter-spacing: -0.5px;
+            line-height: 1.15;
+            margin-bottom: 12px;
+        }
+        .story-header .story-date {
+            font-family: var(--font-head);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: rgba(255,255,255,0.65);
+            margin-bottom: 16px;
+        }
+        .story-header .story-subtitle {
+            font-family: var(--font-body);
+            font-style: italic;
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: rgba(255,255,255,0.85);
+            max-width: 620px;
+            margin: 0 auto;
+        }
+
+        /* ── Stats strip ── */
+        .stats-strip {
+            background: #fff;
+            border-bottom: 1px solid rgba(0,0,0,0.07);
+            padding: 0;
+        }
+        .stats-inner {
+            max-width: 960px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            divide-x: 1px solid rgba(0,0,0,0.08);
+        }
+        .stat-block {
+            padding: 32px 24px;
+            text-align: center;
+            border-right: 1px solid rgba(0,0,0,0.07);
+        }
+        .stat-block:last-child { border-right: none; }
+        .stat-value {
+            font-family: var(--font-head);
+            font-weight: 800;
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            color: var(--primary);
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+        .stat-value.anomaly { color: #e74c3c; }
+        .stat-label {
+            font-family: var(--font-head);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-light);
+        }
+
+        /* ── Narrative ── */
+        .narrative {
+            background: var(--bg-light);
+            padding: 64px 24px;
+        }
+        .narrative-inner {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .narrative-inner p {
+            font-family: var(--font-body);
+            font-size: 1.05rem;
+            line-height: 1.85;
+            color: var(--text);
+            margin-bottom: 20px;
+        }
+        .narrative-inner p:last-child { margin-bottom: 0; }
+
+        /* ── Map ── */
+        .map-story {
+            width: 100%;
+            height: 70vh;
+            min-height: 420px;
+            position: relative;
+        }
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+        .map-caption {
+            background: #fff;
+            padding: 14px 24px;
+            text-align: center;
+            font-family: var(--font-head);
+            font-size: 0.78rem;
+            color: var(--text-light);
+            border-top: 1px solid rgba(0,0,0,0.06);
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 640px) {
+            .stats-inner { grid-template-columns: repeat(2, 1fr); }
+            .stat-block { border-right: none; border-bottom: 1px solid rgba(0,0,0,0.07); }
+            .stat-block:last-child { border-bottom: none; }
+            .map-story { height: 60vh; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ── Navbar ── -->
+    <nav class="navbar" id="navbar">
+        <div class="navbar-inner">
+            <a class="navbar-brand" href="../../index.html">Poniendo Ojos al Mar</a>
+            <ul class="navbar-links">
+                <li><a href="../../index.html#cronicas">← Crónicas</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ── Page header ── -->
+    <header class="story-header">
+        <a class="back-link" href="../../index.html#cronicas">Crónicas</a>
+        <p class="story-date">8 de junio de 2025 · Bahía de Santander</p>
+        <h1>Día Mundial de los Océanos</h1>
+        <p class="story-subtitle">Doce mediciones sincronizadas a lo largo de la entrada de la bahía, todas por encima de lo normal.</p>
+    </header>
+
+    <!-- ── Stats strip ── -->
+    <section class="stats-strip">
+        <div class="stats-inner">
+            <div class="stat-block">
+                <div class="stat-value">12</div>
+                <div class="stat-label">Mediciones</div>
+            </div>
+            <div class="stat-block">
+                <div class="stat-value">18.9°C</div>
+                <div class="stat-label">Temperatura media</div>
+            </div>
+            <div class="stat-block">
+                <div class="stat-value">0.8°C</div>
+                <div class="stat-label">Rango espacial (máx − mín)</div>
+            </div>
+            <div class="stat-block">
+                <div class="stat-value anomaly">+2.5°C</div>
+                <div class="stat-label">Anomalía vs. 1970–78</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── Narrative ── -->
+    <section class="narrative">
+        <div class="narrative-inner">
+            <p>
+                El 8 de junio, Día Mundial de los Océanos, los participantes de <em>Poniendo Ojos al Mar</em>
+                salieron al agua de forma coordinada para tomar la temperatura en distintos puntos de la
+                entrada de la bahía de Santander. El resultado fue una instantánea única: doce mediciones
+                distribuidas a lo largo de varios kilómetros, todas tomadas en la misma mañana.
+            </p>
+            <p>
+                La temperatura media registrada fue de 18.9&thinsp;°C —más de dos grados y medio por encima
+                de los valores típicos de junio en la playa del Sardinero durante los años 1970–78 (16.5&thinsp;°C).
+                Aunque no es posible atribuir esta diferencia a una causa única, el dato encaja con la
+                tendencia general de calentamiento que se observa en la región.
+            </p>
+            <p>
+                El mapa muestra la distribución espacial de las temperaturas, con los puntos coloreados
+                según la temperatura absoluta registrada. Aunque el rango total fue de apenas 0.8&thinsp;°C,
+                se aprecia un gradiente claro: las aguas del interior de la bahía resultaron ligeramente
+                más frías que las de la bocana. Este patrón es coherente con la influencia de aportes
+                de agua dulce y el menor intercambio con el mar abierto en la zona interior.
+                Haz clic sobre cualquier punto para ver los detalles.
+            </p>
+        </div>
+    </section>
+
+    <!-- ── Map ── -->
+    <div class="map-story">
+        <div id="map"></div>
+    </div>
+    <div class="map-caption">
+        Mediciones del 8 de junio de 2025 · Color: temperatura absoluta. 
+    </div>
+
+    <!-- ── Footer ── -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-logos">
+                <img src="../../assets/logoNexGen.png" alt="Logo NextGen">
+                <img src="../../assets/logoIEO-CSIC.png" alt="Logo IEO-CSIC">
+            </div>
+            <p class="footer-copy">2025 Poniendo Ojos al Mar</p>
+            <p class="footer-powered">powered by <a href="https://ignasivalles.github.io" target="_blank">ignasivalles</a></p>
+        </div>
+    </footer>
+
+    <script src="../../assets/nav.js"></script>
+    <script>
+        var map = L.map('map').setView([43.460, -3.755], 13);
+
+        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            attribution: '&copy; Esri, Maxar, Earthstar Geographics'
+        }).addTo(map);
+
+        function getColor(temp) {
+            var min = 18.5, mid = 19, max = 19.5;
+            var blue = [44, 123, 182], white = [255, 255, 191], red = [215, 25, 28];
+            var ratio, s, e;
+            if (temp < mid) {
+                ratio = Math.max(0, (temp - min) / (mid - min));
+                s = blue; e = white;
+            } else {
+                ratio = Math.min(1, (temp - mid) / (max - mid));
+                s = white; e = red;
+            }
+            var r = Math.round(s[0] + ratio * (e[0] - s[0]));
+            var g = Math.round(s[1] + ratio * (e[1] - s[1]));
+            var b = Math.round(s[2] + ratio * (e[2] - s[2]));
+            return 'rgb(' + r + ',' + g + ',' + b + ')';
+        }
+
+        fetch('../../data/data_8junio.csv')
+            .then(r => r.text())
+            .then(csv => {
+                Papa.parse(csv, {
+                    header: true,
+                    complete: function(results) {
+                        results.data.forEach(function(row) {
+                            var lat  = parseFloat(row.Latitude);
+                            var lon  = parseFloat(row.Longitude);
+                            var temp = parseFloat(row.Temperature);
+                            var anom = parseFloat(row.Temperature_Anomaly);
+                            var date = row.Date;
+                            if (isNaN(lat) || isNaN(lon)) return;
+
+                            L.circleMarker([lat, lon], {
+                                radius: 8,
+                                color: 'rgba(0,0,0,0.4)',
+                                weight: 1,
+                                fillColor: getColor(temp),
+                                fillOpacity: 0.92
+                            }).addTo(map).bindPopup(
+                                '<div style="font-family:\'Open Sans\',sans-serif;min-width:160px;padding:4px 0">' +
+                                '<strong style="font-size:1rem">' + temp.toFixed(1) + '&thinsp;°C</strong>' +
+                                '<br><span style="color:#718096;font-size:0.85rem">Anomalía: <strong style="color:' + (anom >= 0 ? '#c0392b' : '#2980b9') + '">' + (anom >= 0 ? '+' : '') + anom.toFixed(1) + '&thinsp;°C</strong></span>' +
+                                '<br><span style="color:#a0aec0;font-size:0.8rem">' + date + '</span>' +
+                                '</div>'
+                            );
+                        });
+                    }
+                });
+            });
+
+        // Color legend
+        var legend = L.control({ position: 'bottomright' });
+        legend.onAdd = function() {
+            var div = L.DomUtil.create('div', 'color-bar-container');
+            div.innerHTML =
+                '<div class="color-bar-title">Temperatura (°C)</div>' +
+                '<div class="color-bar"></div>' +
+                '<div class="color-bar-labels"><span>18.5</span><span>19</span><span>19.5</span></div>';
+            return div;
+        };
+        legend.addTo(map);
+    </script>
+</body>
+</html>
