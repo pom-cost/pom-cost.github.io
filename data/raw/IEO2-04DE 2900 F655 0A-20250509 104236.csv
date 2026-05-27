@@ -1,0 +1,23 @@
+------------------------------,--------------------
+www.electricblue.eu, Portugal
+------------------------------,--------------------
+EnvLogger version, T2.4
+EnvLogger Viewer version, 6.1
+downloading device type, android
+device, SM-M127F
+device name, M12 de Laura
+downloading mode, manual
+------------------------------,--------------------
+serial number, 04DE 2900 F655 0A
+custom name, IEO2
+temperature, degrees Celsius
+time zone, UTC+0000
+sampling resolution, 0.1
+samples, 1
+time diff [logger-smartphone](sec), -2
+lat, 43.463929
+long, -3.782870
+accuracy (m), 10.0
+------------------------------,--------------------
+time,temp
+2025-05-09 08:42:20,NA
