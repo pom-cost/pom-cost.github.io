@@ -238,6 +238,51 @@ def save_fig(fig, path):
 
 
 # ── Main ──────────────────────────────────────────────────────────────────────
+def update_index_stats(df):
+    """Update hardcoded stats in index.html from latest data."""
+    import re
+
+    index_path = ROOT / 'index.html'
+    html = index_path.read_text(encoding='utf-8')
+
+    last_date  = df['Date'].dt.date.max()
+    last_day   = df[df['Date'].dt.date == last_date]
+    last_temp  = round(last_day['Temperature'].mean(), 1)
+    last_anom  = last_day['Temperature_Anomaly'].mean()
+    last_clim  = round(last_day['climatology_temp'].mean(), 1)
+    total_obs  = len(df)
+
+    # Format values
+    anom_str   = f"{last_anom:+.1f}"
+    date_label = last_date.strftime('%-d %b %Y').lower()
+    month_name = last_date.strftime('%B').lower()
+
+    # Replace stat blocks using regex
+    html = re.sub(
+        r'(<div class="stat-value">)\s*[\d.]+&thinsp;°C\s*(</div>\s*<div class="stat-label">Última medición · )[\w\s]+?(</div>)',
+        lambda m: f'{m.group(1)}{last_temp}&thinsp;°C{m.group(2)}{date_label}{m.group(3)}',
+        html
+    )
+    html = re.sub(
+        r'(<div class="stat-value anomaly">)\s*[+\-][\d.]+&thinsp;°C\s*(</div>)',
+        f'\\g<1>{anom_str}&thinsp;°C\\g<2>',
+        html
+    )
+    html = re.sub(
+        r'(<div class="stat-value">)\s*[\d.]+&thinsp;°C\s*(</div>\s*<div class="stat-label">Referencia histórica · )[\w]+?(</div>)',
+        lambda m: f'{m.group(1)}{last_clim}&thinsp;°C{m.group(2)}{month_name}{m.group(3)}',
+        html
+    )
+    html = re.sub(
+        r'(<div class="stat-value">)\s*\d+\s*(</div>\s*<div class="stat-label">Observaciones totales)',
+        f'\\g<1>{total_obs}\\g<2>',
+        html
+    )
+
+    index_path.write_text(html, encoding='utf-8')
+    print(f"  → index.html stats updated ({last_temp} °C · {anom_str} °C · {last_clim} °C · {total_obs} obs · {date_label})")
+
+
 def main():
     PLOTS.mkdir(exist_ok=True)
     df = load_data()
@@ -249,6 +294,9 @@ def main():
     print("Generating climatology plot...")
     save_fig(make_climatology(df), PLOTS / 'climatology_plot.html')
     print("  → plots/climatology_plot.html")
+
+    print("Updating index.html stats...")
+    update_index_stats(df)
 
     print("\nDone.")
 
