@@ -8,6 +8,11 @@ on:
       - 'data/raw/**'
   workflow_dispatch:
 
+# Prevent overlapping runs from generating and pushing outputs at the same time.
+concurrency:
+  group: process-raw-sensor-files-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   process:
     runs-on: ubuntu-latest
@@ -48,7 +53,8 @@ jobs:
                   plots/timeseries_plot.html plots/climatology_plot.html \
                   index.html
           git diff --cached --quiet || git commit -m "data: regenerate outputs [skip ci]"
-          git push
+          git fetch origin "$GITHUB_REF_NAME"
+          git rebase "origin/$GITHUB_REF_NAME"
+          git push origin "HEAD:$GITHUB_REF_NAME"
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # ADD THIS SECTION
-
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
